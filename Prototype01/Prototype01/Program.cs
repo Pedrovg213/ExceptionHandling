@@ -22,6 +22,7 @@ namespace Prototype01 {
             // Instantiation
             Reservation reservation = new Reservation(roomNumber, checkIn, checkOut);
             Console.WriteLine( reservation );
+            Console.WriteLine();
 
             // Update
             Console.WriteLine( "Enter the data to uptade reservation:" );
@@ -32,15 +33,12 @@ namespace Prototype01 {
             Console.Write( "Check out date (dd/mm/yyyy): " );
             checkOut = DateTime.Parse( Console.ReadLine() );
 
-            DateTime now = DateTime.Now;
-            if ( checkIn < now || checkOut < now ) {
-               Console.WriteLine( "Reservation Error: Reservation dates to uptades must be future dates." );
-            } else if ( checkOut <= checkIn ) {
-               Console.WriteLine( "Reservation Error: Check date out must be after check in date." );
-            } else {
-               reservation.UpdateDates( checkIn , checkOut );
+            string error = reservation.UpdateDates(checkIn, checkOut);
+
+            if ( error != null )
+               Console.WriteLine( "Reservation Error: " + error );
+            else
                Console.WriteLine( reservation );
-            }
          }
       }
    }

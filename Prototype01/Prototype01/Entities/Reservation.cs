@@ -28,9 +28,20 @@ namespace Prototype01.Entities {
       }
 
 
-      public void UpdateDates( DateTime _checkIn , DateTime _checkOut ) {
+      public string UpdateDates( DateTime _checkIn , DateTime _checkOut ) {
+
+         DateTime now = DateTime.Now;
+         if ( _checkIn < now || _checkOut < now ) {
+            return "Reservation dates to uptades must be future dates.";
+         } 
+         if ( _checkOut <= _checkIn ) {
+            return "Check out date must be after check in date." ;
+         }
+
          CheckIn = _checkIn;
          CheckOut = _checkOut;
+
+         return null;
       }
       public int Duration( ) {
 
