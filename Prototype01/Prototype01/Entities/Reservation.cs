@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Prototype01.Entities.Exceptions;
 
 namespace Prototype01.Entities {
    internal class Reservation {
@@ -22,26 +19,28 @@ namespace Prototype01.Entities {
       }
       public Reservation( int _roomNumber , DateTime _checkIn , DateTime _checkOut ) {
 
+         if ( _checkOut <= _checkIn ) {
+            throw new DomainException( "Check out date must be after check in date." );
+         }
+
          RoomNumber = _roomNumber;
          CheckIn = _checkIn;
          CheckOut = _checkOut;
       }
 
 
-      public string UpdateDates( DateTime _checkIn , DateTime _checkOut ) {
+      public void UpdateDates( DateTime _checkIn , DateTime _checkOut ) {
 
          DateTime now = DateTime.Now;
          if ( _checkIn < now || _checkOut < now ) {
-            return "Reservation dates to uptades must be future dates.";
-         } 
+            throw new DomainException( "Reservation dates to uptades must be future dates." );
+         }
          if ( _checkOut <= _checkIn ) {
-            return "Check out date must be after check in date." ;
+            throw new DomainException( "Check out date must be after check in date." );
          }
 
          CheckIn = _checkIn;
          CheckOut = _checkOut;
-
-         return null;
       }
       public int Duration( ) {
 
